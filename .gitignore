@@ -1,0 +1,4 @@
+vault
+inventory
+*.retry
+.vault_pass

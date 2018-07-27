@@ -1,0 +1,52 @@
+---
+- name: prepare system
+  hosts: lan
+  become: yes
+
+  vars_files:
+    - vault
+
+  vars:
+    ansible_become_pass: '{{ su_password }}'
+
+  tasks:
+    - name: aurman user
+      user:
+        name: aurman
+        password: ' {{ su_password }}'
+        group: wheel
+
+    - name: aurman configuration
+      template:
+        src: aurman_config
+        dest: /home/aurman/.config/aurman/aurman_config
+
+    - name: pacman permission
+      template:
+        src: 11-aurman
+        dest: /etc/sudoers.d/11-aurman
+        validate: 'visudo -cf %s'
+
+- name: upgrade core system
+  hosts: lan
+  become: yes
+
+  vars_files:
+    - vault.yml
+
+  vars:
+    ansible_become_pass: '{{ su_password }}'
+
+  tasks:
+    - name: pacman upgrade
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    - name: aurman upgrade
+      become_user: aurman
+      aur:
+        upgrade: yes
+        use: aurman
+        aur_only: yes
+

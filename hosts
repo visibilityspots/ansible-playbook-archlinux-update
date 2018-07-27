@@ -1,2 +1,2 @@
 [lan]
-localhost
+localhost ansible_connection=local ansible_become_pass='{{ su_password_localhost }}'

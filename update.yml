@@ -6,14 +6,10 @@
   vars_files:
     - vault
 
-  vars:
-    ansible_become_pass: '{{ su_password }}'
-
   tasks:
     - name: aurman user
       user:
         name: aurman
-        password: ' {{ su_password }}'
         group: wheel
 
     - name: aurman configuration
@@ -32,10 +28,7 @@
   become: yes
 
   vars_files:
-    - vault.yml
-
-  vars:
-    ansible_become_pass: '{{ su_password }}'
+    - vault
 
   tasks:
     - name: pacman upgrade
@@ -49,4 +42,3 @@
         upgrade: yes
         use: aurman
         aur_only: yes
-

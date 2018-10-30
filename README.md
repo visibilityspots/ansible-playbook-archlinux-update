@@ -1,6 +1,8 @@
 # ansible-playbook archlinux update
 
-this playbook can be used to update mulitple archlinux systems
+this playbook can be used to update mulitple archlinux systems based on the [pacman helper](https://docs.ansible.com/ansible/latest/modules/pacman_module.html) and the [aur module](https://github.com/kewlfft/ansible-aur)
+
+It will by default install [yay](https://github.com/Jguer/yay) on your system by using makepkg toghether with an aurman user which will be used to upgrade the systems.
 
 ## configuration
 

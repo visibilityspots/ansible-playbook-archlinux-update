@@ -12,10 +12,11 @@
         name: aurman
         group: wheel
 
-    - name: aurman configuration
-      template:
-        src: aurman_config
-        dest: /home/aurman/.config/aurman/aurman_config
+    - name: install yay
+      aur:
+        name: yay
+        use: makepkg
+        skip_installed: true
 
     - name: pacman permission
       template:
@@ -36,9 +37,9 @@
         update_cache: yes
         upgrade: yes
 
-    - name: aurman upgrade
+    - name: yay upgrade
       become_user: aurman
       aur:
         upgrade: yes
-        use: aurman
+        use: yay
         aur_only: yes

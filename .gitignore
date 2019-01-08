@@ -2,3 +2,4 @@ vault
 inventory
 *.retry
 .vault_pass
+log/*

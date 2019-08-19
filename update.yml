@@ -2,6 +2,7 @@
 - name: prepare system
   hosts: lan
   become: yes
+  gather_facts: no
 
   vars_files:
     - vault
@@ -12,21 +13,24 @@
         name: aurman
         group: wheel
 
-    - name: install yay
-      aur:
-        name: yay
-        use: makepkg
-        skip_installed: true
-
     - name: pacman permission
       template:
         src: 11-aurman
         dest: /etc/sudoers.d/11-aurman
         validate: 'visudo -cf %s'
 
+    - name: install yay
+      become: yes
+      become_user: aurman
+      aur:
+        name: yay
+        use: makepkg
+        skip_installed: true
+
 - name: upgrade core system
   hosts: lan
   become: yes
+  gather_facts: no
 
   vars_files:
     - vault
